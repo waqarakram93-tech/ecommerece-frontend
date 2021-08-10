@@ -45,7 +45,9 @@ const Home = () => {
           <Card.Title>
             {post.title} <Badge bg='success'>{post.genre}</Badge>
           </Card.Title>
-          <Card.Text>{`${post.body.substring(0, 100)}...`}</Card.Text>
+          <Card.Text
+            dangerouslySetInnerHTML={{ __html: `${post.body.substring(0, 100)}...` }}
+          ></Card.Text>
           <Button variant='primary' as={Link} to={`/post/${post._id}`}>
             Read article
           </Button>

@@ -3,3 +3,29 @@
   height: 12vw;
   object-fit: cover;
 }
+
+.cover-box {
+  width: 100%;
+  position: relative;
+}
+
+.cover-img {
+  height: 25vw;
+  width: 100%;
+  object-fit: cover;
+}
+
+.cover-overlay {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 2rem;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

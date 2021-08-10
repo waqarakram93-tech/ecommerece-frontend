@@ -1,13 +1,14 @@
 import { Editor } from '@tinymce/tinymce-react';
+import imageUploadHandler from '../utils/imageUploadHandler';
 
-const PostEditor = ({ onChange, initialvalue }) => {
+const PostEditor = ({ onChange, value }) => {
   const handleEditorChange = newValue => onChange(newValue);
   return (
     <Editor
       apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}
       init={{
         height: 500,
-        menubar: false,
+        menubar: true,
         plugins: [
           'advlist autolink lists link image',
           'charmap print preview anchor help',
@@ -15,10 +16,11 @@ const PostEditor = ({ onChange, initialvalue }) => {
           'insertdatetime media table paste wordcount'
         ],
         toolbar:
-          'undo redo | formatselect | bold italic | alignleft aligncenter alignright | \bullist numlist outdent indent | help'
+          'undo redo | formatselect | bold italic emoticons| alignleft aligncenter alignright alignjustify | \bullist numlist outdent indent | help',
+        images_upload_handler: imageUploadHandler
       }}
       onEditorChange={handleEditorChange}
-      initialValue={initialvalue}
+      value={value}
     />
   );
 };
