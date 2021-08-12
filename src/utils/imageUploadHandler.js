@@ -4,6 +4,7 @@ const imageUploadHandler = async (blobInfo, success, failure, progress) => {
   const formData = new FormData();
   formData.append('image', blobInfo.blob(), blobInfo.filename());
   const axiosConfig = {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     onUploadProgress: ({ loaded, total }) => progress((loaded / total) * 100)
   };
   try {

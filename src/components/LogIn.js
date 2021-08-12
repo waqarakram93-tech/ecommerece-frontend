@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -10,6 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { AuthContext } from '../context/AuthContext';
 
 const LogIn = () => {
+  const location = useLocation();
   const { loading, isAuthenticated, error, signIn } = useContext(AuthContext);
   const defaultValues = {
     email: '',
@@ -23,7 +24,15 @@ const LogIn = () => {
 
   const onSubmit = async data => await signIn(data);
 
-  if (isAuthenticated) return <Redirect to='/' />;
+  if (isAuthenticated)
+    return (
+      <Redirect
+        to={{
+          pathname: location.state ? location.state.next : '/',
+          from: location.pathname
+        }}
+      />
+    );
   if (loading) return <Spinner animation='border' variant='primary' />;
   return (
     <Col md={4}>

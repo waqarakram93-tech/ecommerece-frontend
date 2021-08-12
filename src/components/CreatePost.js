@@ -65,7 +65,9 @@ const CreatePost = () => {
     try {
       const {
         data: { location }
-      } = await axios.post(`${process.env.REACT_APP_BLOG_API}/image-upload`, formData);
+      } = await axios.post(`${process.env.REACT_APP_BLOG_API}/image-upload`, formData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       setPreview(location);
       setValue('cover', location);
     } catch (error) {
@@ -103,6 +105,8 @@ const CreatePost = () => {
                   <option value='sci-fi'>Sci-Fi</option>
                   <option value='history'>History</option>
                   <option value='sports'>Sports</option>
+                  <option value='tv/movies'>TV/Movies</option>
+                  <option value='code'>Code</option>
                 </Form.Select>
                 {errors.genre && <Alert variant='danger'>{errors.genre.message}</Alert>}
               </Form.Group>
@@ -110,7 +114,7 @@ const CreatePost = () => {
           </Row>
           <Row className='align-items-center'>
             <Col>
-              <Form.Group className='mb-3' controlId='cover'>
+              <Form.Group className='mb-3' controlId='coverSelect'>
                 <Form.Label>Cover</Form.Label>
                 <Form.Control type='file' onChange={uploadPicture} />
                 {errors.cover && <Alert variant='danger'>{errors.cover.message}</Alert>}
