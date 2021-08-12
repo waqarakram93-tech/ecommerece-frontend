@@ -40,7 +40,9 @@ const CreatePost = () => {
       setLoading(true);
       const {
         data: { _id }
-      } = await axios.post(`${process.env.REACT_APP_BLOG_API}/posts`, data);
+      } = await axios.post(`${process.env.REACT_APP_BLOG_API}/posts`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       setLoading(false);
       reset();
       push(`/post/${_id}`);

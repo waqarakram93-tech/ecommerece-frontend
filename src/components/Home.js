@@ -52,7 +52,7 @@ const Home = () => {
             Read article
           </Button>
         </Card.Body>
-        <Card.Footer>Author: {post.author}</Card.Footer>
+        <Card.Footer>Author: {post.author.name}</Card.Footer>
       </Card>
     </Col>
   ));
