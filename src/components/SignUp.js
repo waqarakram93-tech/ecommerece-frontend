@@ -9,11 +9,17 @@ import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import { AuthContext } from '../context/AuthContext';
 
-const Register = () => {
+const SignUp = () => {
   const location = useLocation();
   const { loading, isAuthenticated, error, signUp } = useContext(AuthContext);
   const defaultValues = {
-    name: '',
+    firstname: '',
+    lastname: '',
+    address: '',
+    postcode: '',
+    city: '',
+    phone: '',
+
     email: '',
     password: '',
     passwordConfirm: ''
@@ -42,15 +48,8 @@ const Register = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>{error && <Alert variant='danger'>{error}</Alert>}</Row>
           <Row>
-            <Form.Group className='mb-3' controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Name'
-                {...register('name', { required: 'Name is required' })}
-              />
-              {errors.name && <Alert variant='danger'>{errors.name.message}</Alert>}
-            </Form.Group>
+
+
             <Form.Group className='mb-3' controlId='email'>
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -92,4 +91,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;

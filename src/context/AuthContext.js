@@ -8,7 +8,34 @@ const AuthState = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [profile, setProfile] = useState({})
+
   useEffect(() => authToken && setIsAuthenticated(true), [authToken]);
+
+  useEffect(() => {
+    const getMe = async () => {
+      try {
+        setLoading(true);
+        const {
+          data
+        } = await axios.get(`${process.env.REACT_APP_ECOMMERCE_FINAL}/auth/me`, { headers: { Authorization: authToken } });
+        setProfile(data)
+        setLoading(false);
+      } catch (error) {
+        if (error.response) {
+          setError(error.response.data.error);
+          setTimeout(() => setError(null), 3000);
+          setLoading(false);
+        } else {
+          setError(error.message);
+          setTimeout(() => setError(null), 3000);
+          setLoading(false);
+        }
+      }
+    }
+    isAuthenticated && getMe()
+
+  }, [isAuthenticated])
 
   const signUp = async data => {
     if (data.password !== data.passwordConfirm) {
@@ -20,7 +47,7 @@ const AuthState = ({ children }) => {
       setLoading(true);
       const {
         data: { token }
-      } = await axios.post(`${process.env.REACT_APP_BLOG_API}/auth/signup`, data);
+      } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/auth/signup`, data);
       localStorage.setItem('token', token);
       setIsAuthenticated(true);
       setLoading(false);
@@ -42,7 +69,7 @@ const AuthState = ({ children }) => {
       setLoading(true);
       const {
         data: { token }
-      } = await axios.post(`${process.env.REACT_APP_BLOG_API}/auth/signin`, data);
+      } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/auth/signin`, data);
       localStorage.setItem('token', token);
       setIsAuthenticated(true);
       setLoading(false);
@@ -65,7 +92,7 @@ const AuthState = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loading, isAuthenticated, error, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ loading, isAuthenticated, profile, error, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
