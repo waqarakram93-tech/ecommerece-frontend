@@ -9,7 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './components/Home';
 import Admin from './components/Admin'
 import Categories from './components/Categories';
-//import Products from './components/Products';
+import Products from './components/Products';
 import SubCategories from './components/SubCategories';
 import AuthState from './context/AuthContext';
 import EcommerceState from './context/EcommerceContext';
@@ -33,7 +33,7 @@ const App = () => {
                 <ProtectedRoute exact path='/admin' component={Admin} admin />
                 <ProtectedRoute exact path='/admin/categories' component={Categories} admin />
                 <ProtectedRoute exact path='/admin/subcategories' component={SubCategories} admin />
-                <ProtectedRoute exact path='/admin/products' component={Admin} admin />
+                <ProtectedRoute exact path='/admin/products' component={Products} admin />
               </Switch>
             </EcommerceState>
           </Row>

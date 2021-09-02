@@ -1,18 +1,17 @@
-import React from 'react';
+import { useContext } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
-import { ListGroup } from 'react-bootstrap';
-//import Categories from './components/Categories';
+import { EcommerceContext } from '../context/EcommerceContext'
+
 
 function Home() {
+    const { error, products } = useContext(EcommerceContext)
     return (
-
         <Row>
-            <Col>Products</Col>
+            {products.map(p => <div key={p.id}>{p.name}</div>)}
         </Row>
-
     )
 }
 
