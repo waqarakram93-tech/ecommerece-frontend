@@ -8,6 +8,7 @@ const EcommerceState = ({ children }) => {
     const [categories, setCategories] = useState([])
     const [subcategories, setSubcategories] = useState([])
     const [products, setProducts] = useState([])
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || [])
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
 
@@ -244,8 +245,67 @@ const EcommerceState = ({ children }) => {
         }
     };
 
+    const checkCart = newProduct => {
+        const productExists = cart.find(item => item.id === newProduct.id)
+        return productExists ? true : false
+    }
+
+    const addToCart = (product) => {
+        const found = checkCart(product)
+        if (!found) {
+            setCart(prev => {
+                const newCart = [{ ...product, qty: 1 }, ...prev]
+                localStorage.setItem('cart', JSON.stringify(newCart))
+                return newCart
+            })
+        } else {
+            setCart(prev => {
+                const newCart = prev.map(item => {
+                    if (item.id === product.id) {
+                        return { ...item, qty: item.qty + 1 }
+                    } else {
+                        return item
+                    }
+                })
+                localStorage.setItem('cart', JSON.stringify(newCart))
+                return newCart
+            })
+        }
+    }
+
+    const decreaseFromCart = (product) => {
+        const found = checkCart(product)
+        if (!found) return
+        setCart(prev => {
+            const newCart = prev.map(item => {
+                if (item.qty === 0) return
+                if (item.id === product.id) {
+                    return { ...item, qty: item.qty - 1 }
+                } else {
+                    return item
+                }
+            })
+            localStorage.setItem('cart', JSON.stringify(newCart))
+            return newCart
+        })
+    }
+
+    const removeFromCart = (product) => {
+        const found = checkCart(product)
+        if (!found) return
+        setCart(prev => {
+            const newCart = prev.filter(item => {
+                if (item.id !== product.id) {
+                    return item
+                }
+            })
+            localStorage.setItem('cart', JSON.stringify(newCart))
+            return newCart
+        })
+    }
+
     return (
-        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct }}>
+        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct, cart, checkCart, addToCart, decreaseFromCart, removeFromCart }}>
             {children}
         </EcommerceContext.Provider>
     );

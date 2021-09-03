@@ -1,4 +1,5 @@
 import { useState, Fragment, useContext } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -64,11 +65,11 @@ const Products = () => {
     const columns = [
         {
             name: 'Product ID',
-            selector: ({ id }) => id
+            selector: ({ id }) => <Link to={`/product/${id}`}>{id}</Link>
         },
         {
             name: 'Name',
-            selector: ({ name }) => name,
+            selector: ({ id, name }) => <Link to={`/product/${id}`}>{name}</Link>,
         },
         {
             name: 'Category',

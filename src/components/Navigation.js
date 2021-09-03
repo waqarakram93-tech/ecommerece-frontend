@@ -4,14 +4,19 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import { AuthContext } from '../context/AuthContext';
+import { EcommerceContext } from '../context/EcommerceContext';
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Badge from 'react-bootstrap/Badge'
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 
 const Navigation = () => {
   const { isAuthenticated, profile, signOut } = useContext(AuthContext);
+  const { cart } = useContext(EcommerceContext);
 
   return (
     <Navbar bg='light' expand='lg'>
@@ -30,9 +35,15 @@ const Navigation = () => {
             <Button variant="outline-success ">Search</Button>
           </Form>
           <Nav className='ms-auto'>
-            <Nav.Link as={NavLink} to='/' exact>
-              Home
-            </Nav.Link>
+            <>
+              <Nav.Link as={NavLink} to='/cart' exact>
+                <FontAwesomeIcon icon={faShoppingCart} color='darkgrey' />
+                <Badge bg="secondary">{cart.length}</Badge>
+              </Nav.Link>
+              <Nav.Link as={NavLink} to='/' exact>
+                Store
+              </Nav.Link>
+            </>
             {isAuthenticated ? (
               <>
                 {profile.role === 'admin' && <Nav.Link as={NavLink} to='/admin'>Admin</Nav.Link>}

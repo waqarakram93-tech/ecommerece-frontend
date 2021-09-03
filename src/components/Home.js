@@ -9,14 +9,13 @@ import Button from 'react-bootstrap/Button'
 import { EcommerceContext } from '../context/EcommerceContext'
 import Footer from './Footer'
 
-
 function Home() {
-    const { error, products } = useContext(EcommerceContext)
+    const { error, products, cart, checkCart, addToCart, decreaseFromCart, removeFromCart } = useContext(EcommerceContext)
     return (
         <Row className='mt-5'>
             {products.map(p => (
                 <Col md={4} className='mb-4' key={p.id}>
-                    <Card >
+                    <Card className='h-100'>
                         <Carousel>
                             {
                                 p.images.map(img => (<Carousel.Item interval={1000} key={img.id}>
@@ -25,22 +24,24 @@ function Home() {
                             }
                         </Carousel>
                         <Card.Body>
-                            <Card.Title className='title'>{p.name}</Card.Title>
+                            <Card.Title className='title' as={Link} to={`/product/${p.id}`}>{p.name}</Card.Title>
                             <Card.Text>
                                 {`${p.description.substring(0, 1000)}`}
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer className='stock'>Only {p.stock} LEFT </Card.Footer>
                         <Card.Footer className='price'>Price: {p.price} EUR </Card.Footer>
-                        <Button variant="primary" >Add to Cart</Button>
+                        {
+                            checkCart(p) ?
+                                <Button variant="danger" onClick={() => removeFromCart(p)}>Remove from cart</Button> :
+                                <Button variant="primary" onClick={() => addToCart(p)}>Add to cart</Button>
+                        }
                     </Card>
                 </Col>
             ))}
             {/* <Footer /> */}
         </Row>
-
     )
-
 }
 
 
