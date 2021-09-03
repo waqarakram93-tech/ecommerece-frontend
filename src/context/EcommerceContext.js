@@ -9,6 +9,7 @@ const EcommerceState = ({ children }) => {
     const [subcategories, setSubcategories] = useState([])
     const [products, setProducts] = useState([])
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(null)
 
     useEffect(() => {
         const getCategories = async () => {
@@ -214,8 +215,37 @@ const EcommerceState = ({ children }) => {
         }
     };
 
+    const addImageToProduct = async (id, formData) => {
+        try {
+            setLoading(true);
+            const { data } = await axios.put(`${process.env.REACT_APP_ECOMMERCE_FINAL}/products/${id}/image`, formData, {
+                headers: { Authorization: `${localStorage.getItem('token')}` }
+            });
+            setProducts(prev => prev.map(p => {
+                if (p.id === id) {
+                    return { ...p, images: [...p.images, data] }
+                } else {
+                    return p
+                }
+            }))
+            setSuccess('Image added to product')
+            setTimeout(() => setSuccess(null), 3000);
+            setLoading(false);
+        } catch (error) {
+            if (error.response) {
+                setError(error.response.data.error);
+                setTimeout(() => setError(null), 3000);
+                setLoading(false);
+            } else {
+                setError(error.message);
+                setTimeout(() => setError(null), 3000);
+                setLoading(false);
+            }
+        }
+    };
+
     return (
-        <EcommerceContext.Provider value={{ loading, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct }}>
+        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct }}>
             {children}
         </EcommerceContext.Provider>
     );

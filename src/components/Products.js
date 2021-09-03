@@ -11,8 +11,11 @@ import DataTable from 'react-data-table-component';
 import { EcommerceContext } from '../context/EcommerceContext'
 
 
+const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+
+
 const Products = () => {
-    const { error, products, subcategories, createProduct, deleteProduct } = useContext(EcommerceContext)
+    const { error, success, products, subcategories, createProduct, deleteProduct, addImageToProduct } = useContext(EcommerceContext)
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false)
     const [currentProduct, setCurrentProduct] = useState(null)
@@ -23,6 +26,7 @@ const Products = () => {
         price: '',
         stock: ''
     });
+    const [file, setFile] = useState('')
     const { subcat_id, product_name, product_description, price, stock } = formState
 
     const handleOpen = (id) => {
@@ -48,6 +52,14 @@ const Products = () => {
             stock: ''
         })
     };
+
+    const onSubmitImage = async (e) => {
+        e.preventDefault()
+        const formData = new FormData();
+        formData.append('image', file[0]);
+        await addImageToProduct(currentProduct, formData)
+        handleClose()
+    }
 
     const columns = [
         {
@@ -76,28 +88,30 @@ const Products = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Adding image to product {currentProduct}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Form onSubmit={onSubmitImage}>
+                    <Modal.Body>
                         <Form.Group className='mb-3' controlId='product_name'>
                             <Form.Label>Select image</Form.Label>
                             <Form.Control
                                 type='file'
+                                onChange={(e) => setFile(e.target.files)}
                             />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" type='submit'>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
             <Col>
                 <Form onSubmit={onSubmit}>
                     <Row>{error && <Alert variant='danger'>{error}</Alert>}</Row>
+                    <Row>{success && <Alert variant='success'>{success}</Alert>}</Row>
                     <Row>
                         <Col md={4}>
                             <Form.Group className='mb-3' controlId='product_name'>
@@ -175,6 +189,11 @@ const Products = () => {
                 columns={columns}
                 data={products}
                 pagination
+                expandableRows
+                expandableRowsComponent={ExpandedComponent}
+                expandOnRowClicked={false}
+                expandOnRowDoubleClicked={false}
+                expandableRowsHideExpander={false}
             />
         </Row >
     );

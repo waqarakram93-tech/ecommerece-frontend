@@ -11,6 +11,8 @@
     "axios": "^0.21.1",
     "bootstrap": "5.0.2",
     "layout": "^2.2.0",
+    "mdb": "^0.1.0",
+    "mdbreact": "^5.1.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-beta.4",
     "react-data-table-component": "^6.11.8",

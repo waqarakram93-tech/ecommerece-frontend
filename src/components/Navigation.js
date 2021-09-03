@@ -4,6 +4,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import { AuthContext } from '../context/AuthContext';
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
 
 const Navigation = () => {
   const { isAuthenticated, profile, signOut } = useContext(AuthContext);
@@ -16,6 +21,14 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
+          <Form className="d-flex mx-auto">
+            <FormControl
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <Button variant="outline-success ">Search</Button>
+          </Form>
           <Nav className='ms-auto'>
             <Nav.Link as={NavLink} to='/' exact>
               Home
@@ -38,7 +51,7 @@ const Navigation = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Navbar >
   );
 };
 
