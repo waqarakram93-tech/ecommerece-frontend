@@ -15,10 +15,10 @@ function Home() {
         <Row className='mt-5'>
             {products.map(p => (
                 <Col md={4} className='mb-4' key={p.id}>
-                    <Card className='h-100'>
-                        <Carousel>
+                    <Card className='h-100' >
+                        <Carousel >
                             {
-                                p.images.map(img => (<Carousel.Item interval={1000} key={img.id}>
+                                p.images.map(img => (<Carousel.Item interval={1500} key={img.id}>
                                     <Card.Img variant="top" src={img.url} />
                                 </Carousel.Item>))
                             }
@@ -30,7 +30,7 @@ function Home() {
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer className='stock'>Only {p.stock} LEFT </Card.Footer>
-                        <Card.Footer className='price'>Price: {p.price} EUR </Card.Footer>
+                        <Card.Footer className='price'>Price: {p.price} EUR  </Card.Footer>
                         {
                             checkCart(p) ?
                                 <Button variant="danger" onClick={() => removeFromCart(p)}>Remove from cart</Button> :
