@@ -19,10 +19,10 @@ const Navigation = () => {
   const { cart } = useContext(EcommerceContext);
 
   return (
-    <Navbar bg='light' expand='lg'>
+    <Navbar bg='info' expand='lg'>
       <Container>
         <Navbar.Brand as={Link} to='/'>
-          eCommerce
+          Knives-Store
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
@@ -32,7 +32,7 @@ const Navigation = () => {
               placeholder="Search"
               aria-label="Search"
             />
-            <Button variant="outline-success ">Search</Button>
+            <Button variant="secondary ">Search</Button>
           </Form>
           <Nav className='ms-auto'>
             <>

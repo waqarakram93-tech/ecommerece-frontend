@@ -30,7 +30,7 @@
   align-items: center;
 }
 .price{
-  color: rgb(0, 0, 0)
+  color: rgb(226, 153, 43);
   
 }
 .stock{
@@ -45,4 +45,9 @@
 }
 .des{
   color: rgb(0, 119, 255);
+
+}
+.page-footer{
+  background-color: rgba(0, 204, 255, 0.342)
+  ;
 }

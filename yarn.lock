@@ -7852,6 +7852,11 @@
   dependencies:
     "concat-stream" "0.0.7"
 
+"mdbootstrap@^4.20.0":
+  "integrity" "sha512-eIxaYsvHct2BKqkJWphh6j7nFQXHh9NjbbN7a+dctfrVsKaydNW5XpKIxmq2tDSb9+XYGm9hK7hMTlHgeV6wdw=="
+  "resolved" "https://registry.npmjs.org/mdbootstrap/-/mdbootstrap-4.20.0.tgz"
+  "version" "4.20.0"
+
 "mdbreact@^5.1.0":
   "integrity" "sha512-l6h01ddV9eMacYHWyH8Np/rHz+/xZP21SeS7EnxZVE03RVXc993IbJFv2YgmNMWcK5NxE6uLgB+EqTQhLiOICw=="
   "resolved" "https://registry.npmjs.org/mdbreact/-/mdbreact-5.1.0.tgz"

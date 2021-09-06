@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card'
@@ -11,9 +12,14 @@ import Footer from './Footer'
 
 function Home() {
     const { error, products, cart, checkCart, addToCart, decreaseFromCart, removeFromCart } = useContext(EcommerceContext)
+    const [visible, setVisible] = useState(3);
+
+    const showMoreItems = () => {
+        setVisible((prevValue) => prevValue + 3);
+    }
     return (
-        <Row className='mt-5'>
-            {products.map(p => (
+        <Row className='mt-1'>
+            {products.slice(0, visible).map(p => (
                 <Col md={4} className='mb-4' key={p.id}>
                     <Card className='h-100' >
                         <Carousel >
@@ -39,51 +45,17 @@ function Home() {
                     </Card>
                 </Col>
             ))}
-            {/* <Footer /> */}
+            <Row>
+                <div className="d-flex col-md-12 justify-content-center">
+                    <Button variant="info w-25" onClick={showMoreItems}>See More</Button>
+                </div>
+            </Row>
+            <Footer />
         </Row>
     )
 }
 
 
 export default Home
-// import { useContext } from 'react';
-// import React from "react";
-// import {
-//     MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage,
-//     MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn
-// } from "mdbreact";
-// import { EcommerceContext } from '../context/EcommerceContext'
 
-// function Home()  {
-//     const { error, products } = useContext(EcommerceContext)
-//     return (
-//         <MDBContainer>
-//             <MDBCarousel activeItem={1} length={3} slide={true} showControls={true} showIndicators={true} multiItem>
-//                 <MDBCarouselInner>
-//                     <MDBRow>
-//                         {products.map(p => (
-//                             <MDBCarouselItem key={p.id}>
-//                                 <MDBCol md="4">
-//                                     <MDBCard className="mb-2">
-//                                         <MDBCardImage className="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" />
-//                                         <MDBCardBody>
-//                                             <MDBCardTitle>{p.name}</MDBCardTitle>
-//                                             <MDBCardText>
-//                                                 Some quick example text to build on the card title and
-//                                                 make up the bulk of the card's content.
-//                                             </MDBCardText>
-//                                             <MDBBtn color="primary">MDBBtn</MDBBtn>
-//                                         </MDBCardBody>
-//                                     </MDBCard>
-//                                 </MDBCol>
-
-//                             </MDBCarouselItem>
-//                         ))}
-//                     </MDBRow>
-//                 </MDBCarouselInner>
-//             </MDBCarousel>
-//         </MDBContainer>
-//     );
-// }
-// export default Home
 

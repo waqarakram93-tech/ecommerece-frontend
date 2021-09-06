@@ -9,11 +9,9 @@ import Button from 'react-bootstrap/Button'
 const Cart = () => {
     const { cart, checkCart, addToCart, decreaseFromCart, removeFromCart } = useContext(EcommerceContext)
     var totalCartPrice = 0;
-    // return <div>{
-    //     cart.map(item => (
     var cart_HTML = '';
     if (cart.length > 0) {
-        cart_HTML = <div className="table-responsive">
+        cart_HTML = <div className="table-responsive ">
             <table className="table table-bordered">
                 <thead>
                     <tr>
