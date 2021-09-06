@@ -19,7 +19,7 @@ function Home() {
     }
     return (
         <Row className='mt-1'>
-            {products.slice(0, visible).map(p => (
+            {products.map(p => (
                 <Col md={4} className='mb-4' key={p.id}>
                     <Card className='h-100' >
                         <Carousel >

@@ -43,6 +43,7 @@ const Navigation = () => {
               <Nav.Link as={NavLink} to='/' exact>
                 Store
               </Nav.Link>
+
             </>
             {isAuthenticated ? (
               <>

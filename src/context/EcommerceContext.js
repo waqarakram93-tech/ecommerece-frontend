@@ -273,22 +273,23 @@ const EcommerceState = ({ children }) => {
         }
     }
 
-    const decreaseFromCart = (product) => {
-        const found = checkCart(product)
-        if (!found) return
+    const decreaseFromCart = product => {
+        const found = checkCart(product);
+        if (!found) return;
         setCart(prev => {
-            const newCart = prev.map(item => {
-                if (item.qty === 0) return
-                if (item.id === product.id) {
-                    return { ...item, qty: item.qty - 1 }
-                } else {
-                    return item
-                }
-            })
-            localStorage.setItem('cart', JSON.stringify(newCart))
-            return newCart
-        })
-    }
+            const newCart = prev
+                .map(item => {
+                    if (item.id === product.id) {
+                        return { ...item, qty: item.qty - 1 };
+                    } else {
+                        return item;
+                    }
+                })
+                .filter(item => item.qty > 0);
+            localStorage.setItem('cart', JSON.stringify(newCart));
+            return newCart;
+        });
+    };
 
     const removeFromCart = (product) => {
         const found = checkCart(product)
@@ -304,8 +305,31 @@ const EcommerceState = ({ children }) => {
         })
     }
 
+    const checkOut = async () => {
+        try {
+            setLoading(true);
+            const {
+                data: { url }
+            } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/checkout`, {
+                headers: { Authorization: `${localStorage.getItem('token')}` }
+            });
+            setLoading(false);
+            window.location.href = url;
+        } catch (error) {
+            if (error.response) {
+                setError(error.response.data.error);
+                setTimeout(() => setError(null), 3000);
+                setLoading(false);
+            } else {
+                setError(error.message);
+                setTimeout(() => setError(null), 3000);
+                setLoading(false);
+            }
+        }
+    };
+
     return (
-        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct, cart, checkCart, addToCart, decreaseFromCart, removeFromCart }}>
+        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct, cart, checkCart, addToCart, decreaseFromCart, removeFromCart, checkOut }}>
             {children}
         </EcommerceContext.Provider>
     );

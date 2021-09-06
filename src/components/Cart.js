@@ -9,71 +9,61 @@ import Button from 'react-bootstrap/Button'
 const Cart = () => {
     const { cart, checkCart, addToCart, decreaseFromCart, removeFromCart } = useContext(EcommerceContext)
     var totalCartPrice = 0;
-    var cart_HTML = '';
-    if (cart.length > 0) {
-        cart_HTML = <div className="table-responsive ">
-            <table className="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cart.map((item) => {
-                        totalCartPrice += item.price * item.qty;
-                        return (
-                            <tr>
 
-                                <Carousel style={{ width: '20rem', height: '20rem' }}>
-                                    {
-                                        item.images.map(img => (<Carousel.Item interval={1500} key={img.id}>
-                                            <Card.Img variant="top" src={img.url} />
-                                        </Carousel.Item>))
-                                    }
-                                </Carousel>
-
-                                <td>{item.name}</td>
-                                <td width="15% " className="text-center">{item.price}</td>
-
-                                <td width="15%">
-                                    <div className="input-group">
-                                        <button type="button" className="input-group-text" onClick={() => decreaseFromCart(item)}>-</button>
-                                        <div className="form-control text-center">{item.qty}</div>
-
-                                        <button type="button" className="input-group-text" onClick={() => addToCart(item)}>+</button>
-                                    </div>
-                                </td>
-                                <td width="15% " className="text-center">{item.price * item.qty}</td>
-                                <td width="10%">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => removeFromCart(item)}>Remove</button>
-                                </td>
-
-                            </tr>
-
-                        )
-                    })}
-                </tbody>
-            </table>
-        </div>
-    }
-    else {
-        cart_HTML = <div>
-            <div className="card card-body py-5 text-center shadow-sm">
-                <h4>Your Shopping Cart is Empty</h4>
-            </div>
-        </div>
-    }
-    return (
-        <div className="py-4">
-            <div className="container">
-                <div className="row">
+    const renderCart = () => {
+        if (cart.length > 0) {
+            return (
+                <>
                     <div className="col-md-12">
-                        {cart_HTML}
+                        <div className="table-responsive ">
+                            <table className="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {cart.map((item) => {
+                                        totalCartPrice += item.price * item.qty;
+                                        return (
+                                            <tr>
+
+                                                <Carousel style={{ width: '20rem', height: '20rem' }}>
+                                                    {
+                                                        item.images.map(img => (<Carousel.Item interval={1500} key={img.id}>
+                                                            <Card.Img variant="top" src={img.url} />
+                                                        </Carousel.Item>))
+                                                    }
+                                                </Carousel>
+
+                                                <td>{item.name}</td>
+                                                <td width="15% " className="text-center">{item.price}</td>
+
+                                                <td width="15%">
+                                                    <div className="input-group">
+                                                        <button type="button" className="input-group-text" onClick={() => decreaseFromCart(item)}>-</button>
+                                                        <div className="form-control text-center">{item.qty}</div>
+
+                                                        <button type="button" className="input-group-text" onClick={() => addToCart(item)}>+</button>
+                                                    </div>
+                                                </td>
+                                                <td width="15% " className="text-center">{item.price * item.qty}</td>
+                                                <td width="10%">
+                                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => removeFromCart(item)}>Remove</button>
+                                                </td>
+
+                                            </tr>
+
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div className="col-md-8"></div>
                     <div className="col-md-4">
@@ -85,10 +75,25 @@ const Cart = () => {
                                 <p>Free Delivery</p>
                             </div>
                             <div className="mt-3">
-                                <Button variant="primary w-100" >Checkout</Button>
+                                <Button variant="primary w-100" as={Link} to='/checkout'>Checkout</Button>
                             </div>
                         </div>
                     </div>
+                </>
+            )
+        } else {
+            return (<div className="col-md-12">
+                Your cart is empty
+            </div>)
+        }
+    }
+
+
+    return (
+        <div className="py-4">
+            <div className="container">
+                <div className="row">
+                    {renderCart()}
                 </div>
             </div>
         </div>
