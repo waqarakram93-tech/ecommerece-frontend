@@ -24,7 +24,7 @@ function Home() {
                     <Card className='h-100' >
                         <Carousel >
                             {
-                                p.images.map(img => (<Carousel.Item interval={1500} key={img.id}>
+                                p.images.slice(0, visible).map(img => (<Carousel.Item interval={1500} key={img.id}>
                                     <Card.Img variant="top" src={img.url} />
                                 </Carousel.Item>))
                             }

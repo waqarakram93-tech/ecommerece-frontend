@@ -51,3 +51,14 @@
   background-color: rgba(0, 204, 255, 0.342)
   ;
 }
+.text-end{
+  color: rgb(165, 42, 42);
+}
+.total{
+  color: brown;
+  font-weight: bold;
+}
+.mt-2{
+  color: rgb(165, 42, 42);
+  font-weight: bold;
+}

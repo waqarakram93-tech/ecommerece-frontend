@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 const Admin = () => {
     return (<ul>
-        <li><Link to='/admin/categories'>Categories</Link></li>
-        <li><Link to='/admin/subcategories'>Subcategories</Link></li>
-        <li><Link to='/admin/products'>Products</Link></li>
+        <>
+            <Link to='/admin/categories'><Button variant="info">Categories</Button></Link>
+            <Link to='/admin/subcategories'><Button variant="warning">Subcategories</Button></Link>
+            <Link to='/admin/products'><Button >Products</Button></Link>
+        </>
     </ul>)
 }
 

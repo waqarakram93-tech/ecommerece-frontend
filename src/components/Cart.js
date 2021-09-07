@@ -19,11 +19,11 @@ const Cart = () => {
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
+                                        <th>Product Image</th>
                                         <th>Product Name</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
-                                        <th>Price</th>
+                                        <th>Total Price</th>
                                         <th>Remove</th>
                                     </tr>
                                 </thead>
@@ -52,7 +52,7 @@ const Cart = () => {
                                                         <button type="button" className="input-group-text" onClick={() => addToCart(item)}>+</button>
                                                     </div>
                                                 </td>
-                                                <td width="15% " className="text-center">{item.price * item.qty}</td>
+                                                <td width="15% " className="text-center">{(item.price * item.qty).toFixed(2)}</td>
                                                 <td width="10%">
                                                     <button type="button" className="btn btn-danger btn-sm" onClick={() => removeFromCart(item)}>Remove</button>
                                                 </td>
@@ -67,10 +67,12 @@ const Cart = () => {
                     </div>
                     <div className="col-md-8"></div>
                     <div className="col-md-4">
-                        <div className="card card-body mt-3">
-                            <h4>Sub Total:
-                                <span className="float-end">{totalCartPrice} EUR</span>
-                            </h4>
+                        <div className=" card card-body mt-3 ">
+                            <div className="total">
+                                <h5 >Sub Total:
+                                    <span className="float-end">{totalCartPrice.toFixed(2)} EURO</span>
+                                </h5>
+                            </div>
                             <div className="mt-2">
                                 <p>Free Delivery</p>
                             </div>
@@ -82,8 +84,8 @@ const Cart = () => {
                 </>
             )
         } else {
-            return (<div className="col-md-12">
-                Your cart is empty
+            return (<div className="card card-body py-5 text-center shadow-sm">
+                <h3 > Your cart is empty</h3>
             </div>)
         }
     }

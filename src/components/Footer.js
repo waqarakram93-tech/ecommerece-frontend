@@ -1,4 +1,5 @@
 import React from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Footer = () => <footer className="page-footer font-small blue pt-4 mt-4">
     <div className="container-fluid text-center text-md-left">
@@ -12,18 +13,16 @@ const Footer = () => <footer className="page-footer font-small blue pt-4 mt-4">
 
 
 
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <div class="col-md-6   mx-auto mb-md-0 mb-4">
 
                 <h6 class="text-uppercase fw-bold mb-4">
                     Contact
                 </h6>
-                <p><i class="bi bi-house-door"></i> ADDRESS:  Luisental 29, 28359 BREMEN GERMANY</p>
-                <p>
-                    <i class="bi bi-envelope-fill"></i>
-                    EMAIL: info@knivestore.com
-                </p>
-                <p><i class="fas fa-phone me-3"></i>PHONE:  + 49 443 142 189</p>
-                <p><i class="fas fa-print me-3"></i>FAX:  + 49 234 567 89</p>
+                <p><i class="bi bi-house-door-fill"></i>   Luisental 29, 28359 BREMEN GERMANY</p>
+                <p><i class="bi bi-envelope-fill"></i>    info@knivestore.com </p>
+
+                <p><i class="bi bi-telephone-fill"></i>    + 49 443 142 189</p>
+                <p><i class="bi bi-printer-fill"></i>       + 49 234 567 89</p>
             </div>
         </div>
     </div>

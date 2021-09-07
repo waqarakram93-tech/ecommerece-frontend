@@ -62,9 +62,16 @@ const LogIn = () => {
           <Button variant='primary' type='submit'>
             Submit
           </Button>
+
+
+
         </Form>
+        <div className="mt-3">
+          Don't have an account? SignUp Now
+        </div>
       </Row>
     </Col>
+
   );
 };
 
