@@ -9,7 +9,6 @@ const AuthState = ({ children }) => {
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [profile, setProfile] = useState({})
-  const [updated, setUpdated] = useState(false)
 
   useEffect(() => authToken && setIsAuthenticated(true), [authToken]);
 
@@ -40,15 +39,17 @@ const AuthState = ({ children }) => {
 
   const updateUserInfo = async data => {
     const axiosConfig = {
-      headers: { Authorization: localStorage.getItem('token') }
+      headers: { Authorization: authToken }
     };
     try {
       setLoading(true);
       const {
-        data: { id }
-      } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/auth/updateme`, data, axiosConfig);
-      setUpdated(true)
-      console.log(updated)
+        data: updatedUser
+      } = await axios.put(`${process.env.REACT_APP_ECOMMERCE_FINAL}/auth/updateme`, data, axiosConfig);
+
+      const { first_name, last_name, address, postcode, city, phone } = updatedUser
+
+      setProfile(prev => ({ ...prev, firstname: first_name, lastname: last_name, address, postcode, city, phone }))
 
       setLoading(false);
     } catch (error) {
@@ -120,7 +121,7 @@ const AuthState = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loading, isAuthenticated, profile, error, signUp, signIn, signOut, updateUserInfo, updated }}>
+    <AuthContext.Provider value={{ loading, isAuthenticated, profile, error, signUp, signIn, signOut, updateUserInfo }}>
       {children}
     </AuthContext.Provider>
   );
