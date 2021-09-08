@@ -8,6 +8,7 @@ const EcommerceState = ({ children }) => {
     const [categories, setCategories] = useState([])
     const [subcategories, setSubcategories] = useState([])
     const [products, setProducts] = useState([])
+    const [orders, setOrders] = useState([])
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || [])
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
@@ -82,6 +83,30 @@ const EcommerceState = ({ children }) => {
             }
         }
         getProducts()
+    }, [])
+
+    useEffect(() => {
+        const getOrdersByUser = async () => {
+            try {
+                setLoading(true);
+                const {
+                    data: { orders }
+                } = await axios.get(`${process.env.REACT_APP_ECOMMERCE_FINAL}/orders`);
+                setOrders(orders)
+                setLoading(false);
+            } catch (error) {
+                if (error.response) {
+                    setError(error.response.data.error);
+                    setTimeout(() => setError(null), 3000);
+                    setLoading(false);
+                } else {
+                    setError(error.message);
+                    setTimeout(() => setError(null), 3000);
+                    setLoading(false);
+                }
+            }
+        }
+        getOrdersByUser()
     }, [])
 
     const createCategory = async (params) => {
@@ -306,11 +331,24 @@ const EcommerceState = ({ children }) => {
     }
 
     const checkOut = async () => {
+        const order_total = cart.reduce((ac, c) => ac + c.price * c.qty, 0)
         try {
             setLoading(true);
             const {
+                data: order
+            } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/orders`, { order_total }, {
+                headers: { Authorization: `${localStorage.getItem('token')}` }
+            });
+            const {
+                data: orderdetails
+            } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/orderdetails`, { order, cart }, {
+                headers: { Authorization: `${localStorage.getItem('token')}` }
+            });
+            localStorage.removeItem('cart')
+            setCart([])
+            const {
                 data: { url }
-            } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/checkout`, {
+            } = await axios.post(`${process.env.REACT_APP_ECOMMERCE_FINAL}/checkout`, { cart }, {
                 headers: { Authorization: `${localStorage.getItem('token')}` }
             });
             setLoading(false);

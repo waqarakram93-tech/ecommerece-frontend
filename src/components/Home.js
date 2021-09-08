@@ -19,12 +19,12 @@ function Home() {
     }
     return (
         <Row className='mt-1'>
-            {products.map(p => (
+            {products.slice(0, visible).map(p => (
                 <Col md={4} className='mb-4' key={p.id}>
                     <Card className='h-100' >
                         <Carousel >
                             {
-                                p.images.slice(0, visible).map(img => (<Carousel.Item interval={1500} key={img.id}>
+                                p.images.map(img => (<Carousel.Item interval={1500} key={img.id}>
                                     <Card.Img variant="top" src={img.url} />
                                 </Carousel.Item>))
                             }

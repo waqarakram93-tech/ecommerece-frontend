@@ -47,6 +47,7 @@ const Navigation = () => {
             </>
             {isAuthenticated ? (
               <>
+                <Nav.Link as={NavLink} to='/orders' exact>Orders</Nav.Link>
                 {profile.role === 'admin' && <Nav.Link as={NavLink} to='/admin'>Admin</Nav.Link>}
                 <Nav.Link onClick={signOut}>Log out</Nav.Link>
               </>

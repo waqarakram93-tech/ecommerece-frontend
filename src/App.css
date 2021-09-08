@@ -62,3 +62,9 @@
   color: rgb(165, 42, 42);
   font-weight: bold;
 }
+.text-end-left{
+  color: rgb(255, 115, 0);
+  font-weight: bold;
+  font-size: larger;
+  line-height: 40px;
+}

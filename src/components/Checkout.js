@@ -41,147 +41,161 @@ const Checkout = () => {
 
     const onSubmit = async data => await updateUserInfo(data);
 
+    const renderCheckout = () => {
+        if (cart.length > 0) {
+            return (
+                <>
+                    <div className="col-md-7">
+                        <div clasName="card">
+                            <div className="card-header">
+                                <h4>Delivery Information</h4>
+                            </div>
+                            <div className="py-4">
+                                <Col >
+                                    <Row>
+                                        {
+                                            !profile.firstname ?
+                                                <Form onSubmit={handleSubmit(onSubmit)}>
+                                                    <Row>{error && <Alert variant='danger'>{error}</Alert>}</Row>
+                                                    <Row>
+
+                                                        <Col md={6}>
+                                                            <Form.Group className='mb-3' controlId='firstname'>
+                                                                <Form.Label>First Name</Form.Label>
+                                                                <Form.Control
+                                                                    type='firstname'
+                                                                    placeholder='First Name'
+                                                                    {...register('firstname', { required: 'First Name is required' })}
+                                                                />
+                                                                {errors.firstname && <Alert variant='danger'>{errors.firstname.message}</Alert>}
+                                                            </Form.Group>
+                                                        </Col>
+                                                        <Col md={6}>
+                                                            <Form.Group className='mb-3' controlId='lastname'>
+                                                                <Form.Label>Last Name</Form.Label>
+                                                                <Form.Control
+                                                                    type='lastname'
+                                                                    placeholder='Last Name'
+                                                                    {...register('lastname', { required: 'Last Name is required' })}
+                                                                />
+                                                                {errors.lastname && <Alert variant='danger'>{errors.lastname.message}</Alert>}
+                                                            </Form.Group>
+                                                        </Col>
+                                                        <Form.Group className='mb-3' controlId='address'>
+                                                            <Form.Label>Full Address</Form.Label>
+                                                            <Form.Control
+                                                                type='address'
+                                                                placeholder='Address'
+                                                                {...register('address', { required: 'Address is required' })}
+                                                            />
+                                                            {errors.address && <Alert variant='danger'>{errors.address.message}</Alert>}
+                                                        </Form.Group>
+
+                                                        <Col md={6}>
+                                                            <Form.Group className='mb-3' controlId='postcode'>
+                                                                <Form.Label>Postcode</Form.Label>
+                                                                <Form.Control
+                                                                    type='postcode'
+                                                                    placeholder='Postcode'
+                                                                    {...register('postcode', { required: 'Postcode is required' })}
+                                                                />
+                                                                {errors.postcode && <Alert variant='danger'>{errors.postcode.message}</Alert>}
+                                                            </Form.Group>
+                                                        </Col>
+
+                                                        <Col md={6}>
+                                                            <Form.Group className='mb-3' controlId='city'>
+                                                                <Form.Label>City</Form.Label>
+                                                                <Form.Control
+                                                                    type='city'
+                                                                    placeholder='City'
+                                                                    {...register('city', { required: 'City is required' })}
+                                                                />
+                                                                {errors.city && <Alert variant='danger'>{errors.city.message}</Alert>}
+                                                            </Form.Group>
+                                                        </Col>
+                                                        <Col md={6}>
+                                                            <Form.Group className='mb-3' controlId='phone'>
+                                                                <Form.Label>Phone</Form.Label>
+                                                                <Form.Control
+                                                                    type='phone'
+                                                                    placeholder='Phone'
+                                                                    {...register('phone', { required: 'Phone is required' })}
+                                                                />
+                                                                {errors.phone && <Alert variant='danger'>{errors.phone.message}</Alert>}
+                                                            </Form.Group>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col md={6} >
+                                                            <Button variant='primary' type='submit'>
+                                                                Save Delivery Info
+                                                            </Button> </Col>
+                                                    </Row>
+                                                </Form>
+                                                : (
+                                                    <Col className="text-end-left" md={8}>
+                                                        <div >Name:  {profile.firstname} {profile.lastname}</div>
+                                                        <div>Address: {profile.address}</div>
+                                                        <div>Postcode: {profile.postcode}</div>
+                                                        <div>City: {profile.city}</div>
+                                                        <div>Phone: {profile.phone}</div>
+                                                        <Col className="text-end mt-5" md={12}>
+                                                            <Button onClick={checkOut} className="btn btn-primary" >Place order and Pay</Button>
+                                                        </Col>
+                                                    </Col>
+                                                )
+                                        }
+                                    </Row>
+                                </Col>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-5">
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="50%">Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cart.map((item) => {
+                                    totalCartPrice += item.price * item.qty;
+                                    return (
+                                        <tr>
+                                            <td>{item.name}</td>
+                                            <td>{item.price}</td>
+                                            <td>{item.qty}</td>
+                                            <td>{(item.price * item.qty).toFixed(2)}</td>
+                                        </tr>
+                                    )
+                                })}
+                                <tr>
+                                    <td colSpan="2 " className="text-end fw-bold">Total to Pay</td>
+                                    <td colspan="2" className="text-end fw-bold">{totalCartPrice.toFixed(2)} EURO</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </>)
+        } else {
+            return (<div className="card card-body py-5 text-center shadow-sm">
+                <h3 > Your cart is empty</h3>
+            </div>)
+        }
+    }
+
     return (
         <div>
             <div className="py-4">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-7">
-                            <div clasName="card">
-                                <div className="card-header">
-                                    <h4>Delivery Information</h4>
-                                </div>
-                                <div className="py-4">
-                                    <Col >
-                                        <Row>
-                                            {
-                                                !profile.firstname ?
-                                                    <Form onSubmit={handleSubmit(onSubmit)}>
-                                                        <Row>{error && <Alert variant='danger'>{error}</Alert>}</Row>
-                                                        <Row>
-
-                                                            <Col md={6}>
-                                                                <Form.Group className='mb-3' controlId='firstname'>
-                                                                    <Form.Label>First Name</Form.Label>
-                                                                    <Form.Control
-                                                                        type='firstname'
-                                                                        placeholder='First Name'
-                                                                        {...register('firstname', { required: 'First Name is required' })}
-                                                                    />
-                                                                    {errors.firstname && <Alert variant='danger'>{errors.firstname.message}</Alert>}
-                                                                </Form.Group>
-                                                            </Col>
-                                                            <Col md={6}>
-                                                                <Form.Group className='mb-3' controlId='lastname'>
-                                                                    <Form.Label>Last Name</Form.Label>
-                                                                    <Form.Control
-                                                                        type='lastname'
-                                                                        placeholder='Last Name'
-                                                                        {...register('lastname', { required: 'Last Name is required' })}
-                                                                    />
-                                                                    {errors.lastname && <Alert variant='danger'>{errors.lastname.message}</Alert>}
-                                                                </Form.Group>
-                                                            </Col>
-                                                            <Form.Group className='mb-3' controlId='address'>
-                                                                <Form.Label>Full Address</Form.Label>
-                                                                <Form.Control
-                                                                    type='address'
-                                                                    placeholder='Address'
-                                                                    {...register('address', { required: 'Address is required' })}
-                                                                />
-                                                                {errors.address && <Alert variant='danger'>{errors.address.message}</Alert>}
-                                                            </Form.Group>
-
-                                                            <Col md={6}>
-                                                                <Form.Group className='mb-3' controlId='postcode'>
-                                                                    <Form.Label>Postcode</Form.Label>
-                                                                    <Form.Control
-                                                                        type='postcode'
-                                                                        placeholder='Postcode'
-                                                                        {...register('postcode', { required: 'Postcode is required' })}
-                                                                    />
-                                                                    {errors.postcode && <Alert variant='danger'>{errors.postcode.message}</Alert>}
-                                                                </Form.Group>
-                                                            </Col>
-
-                                                            <Col md={6}>
-                                                                <Form.Group className='mb-3' controlId='city'>
-                                                                    <Form.Label>City</Form.Label>
-                                                                    <Form.Control
-                                                                        type='city'
-                                                                        placeholder='City'
-                                                                        {...register('city', { required: 'City is required' })}
-                                                                    />
-                                                                    {errors.city && <Alert variant='danger'>{errors.city.message}</Alert>}
-                                                                </Form.Group>
-                                                            </Col>
-                                                            <Col md={6}>
-                                                                <Form.Group className='mb-3' controlId='phone'>
-                                                                    <Form.Label>Phone</Form.Label>
-                                                                    <Form.Control
-                                                                        type='phone'
-                                                                        placeholder='Phone'
-                                                                        {...register('phone', { required: 'Phone is required' })}
-                                                                    />
-                                                                    {errors.phone && <Alert variant='danger'>{errors.phone.message}</Alert>}
-                                                                </Form.Group>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col md={6} >
-                                                                <Button variant='primary' type='submit'>
-                                                                    Save Delivery Info
-                                                                </Button> </Col>
-                                                        </Row>
-                                                    </Form>
-                                                    : (
-                                                        <Col className="text-end" md={6}>
-                                                            <div>Name: {profile.firstname} {profile.lastname}</div>
-                                                            <div>Address: {profile.address}</div>
-                                                            <div>Postcode: {profile.postcode}</div>
-                                                            <div>City: {profile.city}</div>
-                                                            <div>Phone: {profile.phone}</div>
-                                                            <Button onClick={checkOut} className="btn btn-primary" >Place order and Pay</Button>
-                                                        </Col>
-                                                    )
-                                            }
-                                        </Row>
-                                    </Col>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-5">
-                            <table className="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th width="50%">Product</th>
-                                        <th>Price</th>
-                                        <th>Qty</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {cart.map((item) => {
-                                        totalCartPrice += item.price * item.qty;
-                                        return (
-                                            <tr>
-                                                <td>{item.name}</td>
-                                                <td>{item.price}</td>
-                                                <td>{item.qty}</td>
-                                                <td>{(item.price * item.qty).toFixed(2)}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                    <tr>
-                                        <td colSpan="2 " className="text-end fw-bold">Total to Pay</td>
-                                        <td colspan="2" className="text-end fw-bold">{totalCartPrice.toFixed(2)} EURO</td>
-                                    </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
-
+                        {renderCheckout()}
                     </div>
 
                 </div>

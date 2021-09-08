@@ -10,6 +10,7 @@ import Checkout from './components/Checkout';
 import SingleProduct from './components/SingleProduct';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './components/Home';
+import Orders from './components/Orders';
 import Admin from './components/Admin'
 import Categories from './components/Categories';
 import Products from './components/Products';
@@ -37,6 +38,7 @@ const App = () => {
                 <ProtectedRoute exact path='/cart' component={Cart} />
                 <ProtectedRoute exact path='/checkout' component={Checkout} />
                 <ProtectedRoute exact path='/admin' component={Admin} admin />
+                <ProtectedRoute exact path='/orders' component={Orders} admin />
                 <ProtectedRoute exact path='/admin/categories' component={Categories} admin />
                 <ProtectedRoute exact path='/admin/subcategories' component={SubCategories} admin />
                 <ProtectedRoute exact path='/admin/products' component={Products} admin />
