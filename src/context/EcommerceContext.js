@@ -1,9 +1,11 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from './AuthContext'
 
 export const EcommerceContext = createContext();
 
 const EcommerceState = ({ children }) => {
+    const { isAuthenticated } = useContext(AuthContext)
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([])
     const [subcategories, setSubcategories] = useState([])
@@ -108,8 +110,8 @@ const EcommerceState = ({ children }) => {
                 }
             }
         }
-        getOrdersByUser()
-    }, [])
+        isAuthenticated && getOrdersByUser()
+    }, [isAuthenticated])
 
     const createCategory = async (params) => {
         try {
