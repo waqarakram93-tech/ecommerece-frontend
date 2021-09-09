@@ -90,8 +90,10 @@ const EcommerceState = ({ children }) => {
             try {
                 setLoading(true);
                 const {
-                    data: { orders }
-                } = await axios.get(`${process.env.REACT_APP_ECOMMERCE_FINAL}/orders`);
+                    data: orders
+                } = await axios.get(`${process.env.REACT_APP_ECOMMERCE_FINAL}/orders/user`, {
+                    headers: { Authorization: `${localStorage.getItem('token')}` }
+                });
                 setOrders(orders)
                 setLoading(false);
             } catch (error) {
@@ -367,7 +369,7 @@ const EcommerceState = ({ children }) => {
     };
 
     return (
-        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct, cart, checkCart, addToCart, decreaseFromCart, removeFromCart, checkOut }}>
+        <EcommerceContext.Provider value={{ loading, success, error, categories, setCategories, subcategories, setSubcategories, products, setProducts, createCategory, deleteCategory, createSubcategory, deleteSubcategory, createProduct, deleteProduct, addImageToProduct, cart, checkCart, addToCart, decreaseFromCart, removeFromCart, checkOut, orders }}>
             {children}
         </EcommerceContext.Provider>
     );

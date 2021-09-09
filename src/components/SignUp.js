@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation, Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -86,6 +86,11 @@ const SignUp = () => {
             Submit
           </Button>
         </Form>
+        <div className="mt-3">
+          <Link to='/login'>
+            Already a customer? Sign in
+          </Link>
+        </div>
       </Row>
     </Col>
   );
